@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+<title>Registration</title>
+{% block content %}
+<div class="col-sm-12 col-sm-offset-10" align="center">
+<h1>Registration</h1>
+<form method="POST" class="form_group">
+    {% csrf_token %}
+    {{form.username.label}}
+    {{form.username}}
+
+    {{form.password1.label}}
+    {{form.password1}}
+
+    {{form.password2.label}}
+    {{form.password2}}
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+</div>
+{% endblock content %}
