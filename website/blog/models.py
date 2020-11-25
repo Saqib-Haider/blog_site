@@ -11,7 +11,7 @@ def upload_loc(instance, filename):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to=upload_loc, null=True,blank=True)
+    image = models.ImageField(upload_to="images/", null=True,blank=True)
     content = models.TextField()
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)

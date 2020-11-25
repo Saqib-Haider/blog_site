@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<title>{% block h_title %}{{ instance.title}} | {{ block.super }}{% endblock h_title %}</title>
+<title>{% block h_title %}{{ object.title}} | {{ block.super }}{% endblock h_title %}</title>
 {% block content %}
 <div class="col-sm-12 col-sm-offset-10" align="center">
      {% if messages %}
@@ -12,11 +12,11 @@
 </ul>
     </div>
 {% endif %}
-    {% if instance.image %}<br/>
-    <img src="{{ instance.image.url }}" class="img-responsive"/>
+    {% if object.image %}<br/>
+    <img src="{{ object.image.url }}" class="img-responsive"/>
     {% endif %}
-<h1>{{ title }}<br/><small>{{instance.timestamp}}<br/></small></h1>
-{{instance.title}}<br/>
+<h1>{{ title }}<br/><small>{{object.timestamp}}<br/></small></h1>
+{{object.title}}<br/>
 <p><div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
 </p>
 <hr/>
@@ -31,7 +31,7 @@ Twitter
 </a>
 <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}">Reddit</a>
 </p>
-{{instance.content|linebreaks }}<br/>
+{{object.content|linebreaks }}<br/>
     <p><a href="edit/" class="btn btn-primary" role="button">Edit</a><a href="delete/" class="btn btn-primary" role="button">Delete</a></p>
 
 <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="">

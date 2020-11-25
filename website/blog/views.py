@@ -8,10 +8,64 @@ from django.contrib import messages
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from urllib.parse import quote_plus
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse
 
 
 # Create your views here.
+class PCreateView(CreateView):
+    template_name = 'form.html'
+    form_class = PostForm
+    queryset = Post.objects.all()
+
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            return super().form_valid(form)
+
+class PUpdateView(UpdateView):
+    template_name = 'form.html'
+    form_class = PostForm
+    queryset = Post.objects.all()
+
+    def get_object(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        instance = get_object_or_404(Post, slug=slug)
+        return instance
+
+    def form_valid(self, form):
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return super().form_valid(form)
+
+
+class PDetailView(DetailView):
+    template_name = 'detail.html'
+
+    def get_object(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        instance = get_object_or_404(Post, slug=slug)
+        return instance
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PDetailView, self).get_context_data(*args, **kwargs)
+        instance = context['object']
+        context['share_string'] = quote_plus(instance.content)
+        return context
+
+class PDeleteView(DeleteView):
+    template_name = 'delete.html'
+    def get_object(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        return get_object_or_404(Post, slug=slug)
+    def get_success_url(self):
+        return reverse('list')
+
+
+
+
 def home(request):
     return render(request, "home.html")
 
