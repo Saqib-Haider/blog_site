@@ -10,9 +10,23 @@ from urllib.parse import quote_plus
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
+from .serializer import PostSerializer
+from rest_framework import generics
 
 
 # Create your views here.
+
+class PostList(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    lookup_field = 'id'
+
+
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    lookup_field = 'id'
+
 class PCreateView(CreateView):
     template_name = 'form.html'
     form_class = PostForm
